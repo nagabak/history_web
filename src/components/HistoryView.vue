@@ -9,10 +9,10 @@ getList()
 // 获取路由实例  
 const router = useRouter(); 
 
-//用于传递数据到另一个路由（Test） 
+//用于传递数据到另一个路由（Home） 
 function pass(item) {
   const encodedText = encodeURIComponent(item.text);  
-  router.push({ name: 'Test', query: { img: item.img, text: encodedText , time: item.time } });  
+  router.push({ name: 'Home', query: { img: item.img, text: encodedText , time: item.time } });  
   console.log(item.img)
 }
 
