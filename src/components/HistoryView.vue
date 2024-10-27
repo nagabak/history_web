@@ -1,14 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router';  
+import axios from 'axios'
+const list = ref([])
 
-const list = ref([
-  {img:"images/1.png",text: '发生的垃圾啊发软fsfjlksjsfjlsfsfjgflksddjflasfjflsdkjfkslafjlwelajwfldgkld;sjglkjf' ,time:'10-04'},
-  {img:"images/1.png",text: '吃饭' ,time:'10-04'},
-  {img:"images/1.png",text: '吃饭' ,time:'10-01'},
-])
-
-
+getList()
 const router = useRouter(); 
 function pass(item) {
   
@@ -17,8 +13,27 @@ function pass(item) {
   console.log(item.img)
 }
 
-function del(index) {
-  list.value.splice(index, 1)
+async function getList() {
+  const res=await axios(
+    {
+        url:"https://r1t7b701mq.hzh.sealos.run/get_list",
+        method:"GET"
+    }
+  )
+  list.value=res.data.list
+}
+
+async function del(id) {
+  await axios(
+    {
+        url:"https://r1t7b701mq.hzh.sealos.run/del",
+        method:"POST",
+        data:{
+          id: id,
+        },
+    }
+  )
+  getList()
 }
 </script>
 
@@ -30,15 +45,13 @@ function del(index) {
       v-for="(item, index) in list"
       :key="index" 
       class="item"
-      @click="pass(item)"
+      
     >
       <img class="image" :src=item.img alt="">
       <div class="text">{{ item.text }}</div>
-      <div>{{ item.time }}
-
-    </div>
-      
-      <div @click="del(index)" class="del">del</div>
+      <div>{{ item.time }}</div>
+      <button @click="pass(item)"  class="edit">edit</button>
+      <button @click="del(item._id)" class="del">del</button>
     </div>
   </div>
 </template>
@@ -65,8 +78,32 @@ function del(index) {
 }
 
 .del {
-  color: red;
+  background-color: #f44336; 
+  border: none; 
+  color: white;   
+  padding: 10px 20px; 
+  text-align: center;  
+  text-decoration: none;  
+  display: inline-block;  
+  font-size: 16px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s; 
 }
+.edit {  
+  background-color: #4CAF50; 
+  border: none;  
+  color: white;  
+  padding: 10px 20px;  
+  text-align: center; 
+  text-decoration: none;  
+  display: inline-block; 
+  font-size: 16px;  
+  margin-right: 10px; 
+  border-radius: 5px; 
+  cursor: pointer; 
+  transition: background-color 0.3s;  
+}  
 .text
 {
   white-space: nowrap;    
