@@ -3,16 +3,20 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router';  
 import axios from 'axios'
 const list = ref([])
-
+// 创建一个响应式列表，用于存储从服务器获取的数据 
 getList()
+
+// 获取路由实例  
 const router = useRouter(); 
+
+//用于传递数据到另一个路由（Test） 
 function pass(item) {
-  
   const encodedText = encodeURIComponent(item.text);  
   router.push({ name: 'Test', query: { img: item.img, text: encodedText , time: item.time } });  
   console.log(item.img)
 }
 
+//从服务器获取列表数据  
 async function getList() {
   const res=await axios(
     {
@@ -23,6 +27,7 @@ async function getList() {
   list.value=res.data.list
 }
 
+//用于从服务器删除指定ID的数据项 
 async function del(id) {
   await axios(
     {
