@@ -16,7 +16,7 @@ function pass(item) {
 async function getList() {
   const res=await axios(
     {
-        url:"https://r1t7b701mq.hzh.sealos.run/get_list",
+        url:"https://wd6jkzbxt6.hzh.sealos.run/get_list",
         method:"GET"
     }
   )
@@ -26,7 +26,7 @@ async function getList() {
 async function del(id) {
   await axios(
     {
-        url:"https://r1t7b701mq.hzh.sealos.run/del",
+        url:"https://wd6jkzbxt6.hzh.sealos.run/del",
         method:"POST",
         data:{
           id: id,
@@ -45,7 +45,6 @@ async function del(id) {
       v-for="(item, index) in list"
       :key="index" 
       class="item"
-      
     >
       <img class="image" :src=item.img alt="">
       <div class="text">{{ item.text }}</div>
